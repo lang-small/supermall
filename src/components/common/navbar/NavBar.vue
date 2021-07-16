@@ -1,6 +1,6 @@
 <template>
   <div class="nav-bar">
-<!--  导航栏-->
+<!-- 顶部导航栏-->
     <div class="left"> <slot name="left"></slot></div>
     <div class="center"> <slot name="center"></slot></div>
     <div class="right"> <slot name="right"></slot></div>

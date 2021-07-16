@@ -1,6 +1,6 @@
 <template>
 
-  <TabBar>
+  <TabBar class="Main">
     <tab-bar-item path="/home" activeColor="blue">
       <template v-slot:item-icon> <img src="~assets/img/tabbar/首页.png"></template>
       <template v-slot:item-icon-active> <img src="~assets/img/tabbar/首页-active.png"></template>
@@ -56,5 +56,8 @@ export default {
 </script>
 
 <style scoped>
+.Main{
+  z-index: 9;
 
+}
 </style>
