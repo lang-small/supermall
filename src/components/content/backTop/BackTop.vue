@@ -1,4 +1,5 @@
 <template>
+<!--  返回顶部的图标-->
 <div class="back-top" @click="backClick">
   <img src="~assets/img/back-top.png">
 </div>

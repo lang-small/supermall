@@ -1,5 +1,5 @@
 <template>
-
+<!--调用TabBar,TabBarItem组件，具体展示下面导航的内容-->
   <TabBar class="Main">
     <tab-bar-item path="/home" activeColor="blue">
       <template v-slot:item-icon> <img src="~assets/img/tabbar/首页.png"></template>

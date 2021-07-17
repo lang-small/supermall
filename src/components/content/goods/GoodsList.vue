@@ -1,4 +1,5 @@
 <template>
+<!--  商品的展示-->
 <div class="goods">
   <goods-list-item v-for="item in goods" :goods-item="item"></goods-list-item>
 <div>

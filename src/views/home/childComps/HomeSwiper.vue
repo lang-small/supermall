@@ -4,7 +4,7 @@
     <!-- <swiper-item v-for="(item,index) in banners" :key="index">-->
     <swiper-item v-for="item in banners" >
       <a :href="item.link">
-        <img :src="item.image" class="home-nav-item">
+        <img :src="item.image" class="home-nav-item" @load="imageLoad">
       </a>
 
     </swiper-item>
@@ -23,6 +23,21 @@ export default {
     default(){
       return []
     }
+    }
+  },
+  data(){
+    return{
+    isLoad:false
+    }
+  },
+  methods:{
+    imageLoad(){
+      if(!this.isLoad){
+        this.$emit('swiperImageLoad');
+        this.isLoad=true
+      }
+
+      //console.log('图片加载完成');
     }
   },
   components:{

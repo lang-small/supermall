@@ -1,4 +1,5 @@
 <template>
+<!--  轮播-->
   <div id="hy-swiper">
     <div class="swiper" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
       <slot></slot>

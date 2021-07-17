@@ -1,4 +1,5 @@
 <template>
+
 <!--  动态绑定下标值 ，动态绑定事件，当索引等于当前点击的索引触发-->
 <div class="tab-control">
   <div v-for="(item,index) in titles" class="tab-control-item"

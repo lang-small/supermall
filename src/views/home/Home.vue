@@ -1,10 +1,12 @@
+
 <template>
-<div id="home">
+<div id="home" class="wrapper">
 <!--  顶部导航-->
   <nav-bar class="home-nav">
 <template v-slot:center><div>购物街</div></template>
   </nav-bar>
 
+  <tab-control :titles="['流行','精选','新款']" @tabClick="tabClick" ref="tabControl1" class="tab-control" v-show="isTabFixed"/>
 <!--滚动-->
 <!--传入子组件 probe-type =3 ,说明要实时监听  pull-up-load 上拉获取更多-->
   <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true" @pullingUp="loadMore">
@@ -18,7 +20,7 @@
   <feature-view></feature-view>
 
 <!--  点击事件动态切换-->
-  <tab-control class="tab-controls" :titles="['流行','精选','新款']" @tabClick="tabClick"></tab-control>
+  <tab-control :titles="['流行','精选','新款']" @tabClick="tabClick" ref="tabControl"/>
 
 <!--  利用计算属性进行取值-->
   <goods-list :goods=showGoods></goods-list>
@@ -50,6 +52,9 @@ import {getHomeMultidata,getHomeGoods} from "network/home";
 
 
 
+
+
+
 //导入轮播图
 
 
@@ -66,7 +71,12 @@ export default {
 
       },
       currentType:'pop',
-      isShowBackTop:false
+      isShowBackTop:false,
+      tabOffsetTop: 545,
+      isTabFixed:false,
+      saveY:0
+
+
 
     }
   },
@@ -97,6 +107,27 @@ export default {
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
 
+    // //监听item中图片加载完成
+    // this.bus.$on('itemImageLoad',()=>{
+    //    console.log('----------------')
+    // })
+
+  },
+
+  mounted() {
+    //获取tabControl的offSetTop
+    console.log(this.$refs.tabControl.$el.offsetTop);
+
+  },
+
+//再次回到这个页面的时候拿到离开的值
+  activated() {
+    this.$refs.scroll.scrollTo(0,this.saveY,0);
+    this.$refs.scroll.scroll.refresh()
+  },
+  //记录当前页面状态
+  deactivated() {
+   this.saveY=this.$refs.scroll.getScrollY()
   },
 
   methods:{
@@ -105,8 +136,11 @@ export default {
      *
      *
      *
+     *
     */
-
+    // swiperImageLoad(){
+    //   this.tabOffsetTop=this.$refs.tabControl.$el.offsetTop;
+    // },
     loadMore(){
       // console.log('上拉加载更多');调用下面的getHomeGoods方法
       this.getHomeGoods(this.currentType),
@@ -115,7 +149,7 @@ export default {
     },
 
     contentScroll(position){
-
+      //返回顶部的那个图片是否出现
       //和下面if else效果一样
       this.isShowBackTop=(-position.y)>1000
      // console.log(position)
@@ -125,8 +159,12 @@ export default {
      //    this.isShowBackTop=false
      //  }
 
-
+// 是否吸顶
+      this.isTabFixed=(-position.y)>this.tabOffsetTop
     },
+
+
+
     tabClick(index){
      switch (index){
        case 0:
@@ -139,6 +177,9 @@ export default {
          this.currentType='sell'
              break
      }
+     this.$refs.tabControl1.currentIndex=index;
+      this.$refs.tabControl.currentIndex=index;
+
 
     },
 backClick(){
@@ -157,6 +198,7 @@ this.$refs.scroll.scrollTo(0,0,500);
         //this.result=res;
         this.banners=res.data.banner.list;
         this.recommends=res.data.recommend.list;
+
       })
     },
     getHomeGoods(type){
@@ -187,18 +229,25 @@ this.$refs.scroll.scrollTo(0,0,500);
 .home-nav{
   background-color: var(--color-text);
   color: white;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 9;
+  /*position: fixed;*/
+  /*left: 0;*/
+  /*right: 0;*/
+  /*top: 0;*/
+  /*z-index: 9;*/
 
 }
-.tab-controls{
-  position:sticky;
-  top: 44px;
+
+.tab-control{
+  position: relative;
   z-index: 9;
   background-color: #eeeeee;
+}
+.tab-controls{
+  /*//吸顶*/
+  /*position:sticky;*/
+  /*top: 44px;*/
+  /*z-index: 9;*/
+  /*background-color: #eeeeee;*/
 }
 
 .content{

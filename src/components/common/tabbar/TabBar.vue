@@ -1,5 +1,5 @@
 <template>
-
+<!--下面的导航-->
     <div id="tab-bar">
       <slot></slot>
 <!--      <div class="tab-bar-item"><img src="../../assets/img/tabbar/首页.png">首页</div>-->

@@ -1,4 +1,6 @@
 <template>
+<!--  滑动效果-->
+
 <!--  ref如果绑定在组件中，那么通过this.$refs.refname获取到的就是一个组件对象，
 如果ref绑定在普通的元素中，那么通过this.$refs.refname获取到的是一个元素对象
 
@@ -37,18 +39,18 @@ export default {
       probeType:this.probeType,
       //设置可以使用监听事件
       click:true,
-      pullUpLoad: this.pullUpLoad
+      pullUpLoad: this.pullUpLoad,
+      observeDOM:true
 
     }),
 
       this.scroll.on('scroll',(position)=>{
         //时打印坐标
-       // console.log(position);
-
+      //  console.log(position);
         //自定义事件，向父组件传自己的坐标值
         this.$emit('scroll',position)
       }),
-
+     this.scroll.refresh();
       //监听上拉事件
     this.scroll.on('pullingUp',()=>{
      this.$emit('pullingUp')
@@ -64,6 +66,9 @@ export default {
     //调用better-scroll里面的finishPullUp
     finishPullUp(){
       this.scroll.finishPullUp()
+    },
+    getScrollY(){
+      return this.scroll? this.scroll.y:0
     }
   }
 }

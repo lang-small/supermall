@@ -1,8 +1,19 @@
 <template>
-  <div id="app">
+  <div id="app" class="wrapper">
 
-    <main-tab-bar/>
-    <router-view/>
+<!--
+保留home不要销毁
+
+-->
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
+<main-tab-bar></main-tab-bar>
+
+
+
   </div>
 
 </template>
